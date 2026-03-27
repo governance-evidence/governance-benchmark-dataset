@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=69,<80", "wheel"]
+requires = ["setuptools>=69,<83", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -33,16 +33,16 @@ dependencies = [
 
 [project.optional-dependencies]
 parquet = [
-  "pyarrow>=14,<20"
+  "pyarrow>=14,<24"
 ]
 des = [
   "jsonschema>=4.20,<5"
 ]
 dev = [
   "jsonschema>=4.20,<5",
-  "pyarrow>=14,<20",
-  "pytest>=7,<9",
-  "pytest-cov>=4,<6",
+  "pyarrow>=14,<24",
+  "pytest>=7,<10",
+  "pytest-cov>=4,<8",
   "hypothesis>=6.80,<7",
   "ruff>=0.4,<1",
   "mypy>=1.8,<2",
