@@ -1,8 +1,10 @@
 # Governance Benchmark Dataset
 
 ![Status: Alpha](https://img.shields.io/badge/status-alpha-orange)
+![Version: v0.1.0](https://img.shields.io/badge/version-v0.1.0-blue)
 ![Python: 3.11-3.13](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)
 [![CI](https://github.com/governance-evidence/governance-benchmark-dataset/actions/workflows/ci.yml/badge.svg)](https://github.com/governance-evidence/governance-benchmark-dataset/actions/workflows/ci.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19248723.svg)](https://doi.org/10.5281/zenodo.19248723)
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache%202.0-green.svg)](LICENSE-CODE)
 [![License: CC BY 4.0](https://img.shields.io/badge/dataset-CC%20BY%204.0-lightgrey.svg)](LICENSE-DATASET)
 
