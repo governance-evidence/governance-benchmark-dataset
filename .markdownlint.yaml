@@ -1,0 +1,41 @@
+# markdownlint configuration
+# https://github.com/DavidAnson/markdownlint
+
+default: true
+
+# Line length — relaxed for documentation with long URLs
+MD013:
+  line_length: 120
+  code_blocks: false
+  tables: false
+
+# Allow inline HTML for formatting
+MD033:
+  allowed_elements:
+    - br
+    - img
+
+# Allow duplicate headings in different sections
+MD024:
+  siblings_only: true
+
+# Consistent unordered list style (dash)
+MD004:
+  style: dash
+
+# Consistent ordered list prefix (ordered)
+MD029:
+  style: ordered
+
+# Blank lines around fenced code blocks
+MD031: true
+
+# Blank lines around lists
+MD032: true
+
+# No trailing punctuation in headings
+MD026:
+  punctuation: ".,;:!"
+
+# No bare URLs (use markdown links)
+MD034: true

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "Governance Benchmark Dataset"
+message: "If you use this dataset, please cite it as below."
+type: dataset
+authors:
+  - given-names: Oleg
+    family-names: Solozobov
+version: 0.1.0
+license: CC-BY-4.0
+repository-code: "https://github.com/governance-evidence/governance-benchmark-dataset"
+abstract: >-
+  Curated benchmark dataset and evaluation harness for comparing governance
+  evidence feasibility across four decision system architectures: deterministic
+  rule engines, hybrid ML + rules systems, streaming feature-driven systems,
+  and agentic AI systems. Enables cross-architecture comparison of the N4
+  governance evidence framework.
+keywords:
+  - governance evidence
+  - benchmark dataset
+  - decision systems
+  - cross-architecture comparison
+  - agentic AI
+  - accountability

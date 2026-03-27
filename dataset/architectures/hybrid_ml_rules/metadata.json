@@ -1,0 +1,17 @@
+{
+  "architecture_type": "hybrid_ml_rules",
+  "description": "ML scores feed into rule-based decisions. decision_context partially fillable (ML features known, learned boundaries opaque).",
+  "primary_collapse_modalities": ["metric_erosion", "ground_truth_delay"],
+  "structural_breaks": [],
+  "decision_path_enumerable": false,
+  "has_cascade_traces": true,
+  "example_system": "Fraud detection with ML scoring + business rules",
+  "decision_event_property_characteristics": {
+    "decision_context": "partially_fillable",
+    "decision_logic": "partially_fillable",
+    "decision_boundary": "fillable",
+    "decision_quality_indicators": "partially_fillable",
+    "human_override_record": "fillable",
+    "temporal_metadata": "partially_fillable"
+  }
+}

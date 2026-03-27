@@ -1,0 +1,78 @@
+{
+  "scenario_id": "sf-001-realtime-risk",
+  "architecture_type": "streaming_features",
+  "decision_event": {
+    "decision_id": "sf-001-event",
+    "timestamp": "2026-02-20T16:45:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["streaming_velocity_features", "session_risk_score", "device_fingerprint"],
+      "alternatives_considered": ["approve", "step_up_auth", "block"],
+      "constraints_operative": ["latency_sla_50ms", "throughput_10k_tps"]
+    },
+    "decision_logic": {
+      "rule_version": "stream-risk-v1.4",
+      "parameters": {"feature_window_seconds": 300, "model_version": "stream-v2.1"},
+      "thresholds": {"block_above": 0.90, "step_up_above": 0.60}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["feature_pipeline", "scoring_engine", "action_router"],
+      "external_dependencies": ["kafka_cluster", "redis_cache"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": 0.65,
+      "uncertainty_flags": ["feature_staleness_warning", "cache_miss_rate_elevated"],
+      "ground_truth_available": false
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-02-20T16:45:00Z",
+      "evidence_availability_timestamp": null,
+      "ground_truth_arrival_timestamp": "2026-03-20T16:45:00Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "insufficient",
+    "assessor_notes": "High velocity prevents real-time evidence capture. Features computed from potentially stale data under load."
+  },
+  "feasibility_matrix": {
+    "architecture_type": "streaming_features",
+    "scenario_id": "sf-001-realtime-risk",
+    "entries": [
+      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.6, "notes": "Features ephemeral, replay required"},
+      {"property_name": "decision_logic", "level": "fillable", "recovery_cost": 0.1, "notes": "Model version pinned in config"},
+      {"property_name": "decision_boundary", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Streaming topology known, state ephemeral"},
+      {"property_name": "decision_quality_indicators", "level": "partially_fillable", "recovery_cost": 0.5, "notes": "Score logged but calibration degrades under load"},
+      {"property_name": "human_override_record", "level": "unfillable", "recovery_cost": 1.0, "notes": "No human in loop at streaming velocity"},
+      {"property_name": "temporal_metadata", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Decision timestamp available, evidence availability unknown"}
+    ],
+    "fillable_ratio": 0.167,
+    "opaque_ratio": 0.0
+  },
+  "identified_gaps": [
+    {
+      "property_name": "decision_context",
+      "gap_type": "delayed",
+      "severity": 0.6,
+      "description": "Features only recoverable via log replay, not captured at decision time"
+    },
+    {
+      "property_name": "human_override_record",
+      "gap_type": "missing",
+      "severity": 0.4,
+      "description": "No human override mechanism exists at streaming velocity"
+    },
+    {
+      "property_name": "temporal_metadata",
+      "gap_type": "unreliable",
+      "severity": 0.5,
+      "description": "Evidence availability timestamp not captured due to async processing"
+    }
+  ],
+  "timestamp": "2026-02-20T16:45:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "realtime_risk"}
+}

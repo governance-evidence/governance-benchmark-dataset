@@ -1,0 +1,27 @@
+# typos configuration
+# https://github.com/crate-ci/typos
+
+[default.extend-words]
+# Domain-specific terms that are not typos
+"cff" = "cff"         # Citation File Format
+"OPA" = "OPA"         # Open Policy Agent
+"Rego" = "Rego"       # OPA policy language
+"CNP" = "CNP"         # Card Not Present
+"AML" = "AML"         # Anti-Money Laundering
+"PSI" = "PSI"         # Population Stability Index
+"psi" = "psi"
+"ks" = "ks"           # Kolmogorov-Smirnov
+"KS" = "KS"
+"kl" = "kl"           # Kullback-Leibler
+"KL" = "KL"
+"LLM" = "LLM"        # Large Language Model
+"SAC" = "SAC"         # Staleness-Accumulation-Coverage
+
+[files]
+extend-exclude = [
+    ".venv/",
+    "*.egg-info/",
+    ".mypy_cache/",
+    ".pytest_cache/",
+    "htmlcov/",
+]

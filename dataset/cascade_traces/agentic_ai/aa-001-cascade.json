@@ -1,0 +1,43 @@
+{
+  "architecture_type": "agentic_ai",
+  "scenario_id": "aa-001-fraud-investigation",
+  "steps": [
+    {
+      "stage": "feature_incorrectness",
+      "description": "Agent retrieves stale customer profile from cached database snapshot. Profile data is 72 hours old, missing recent account activity that would change risk assessment.",
+      "severity": 0.30,
+      "evidence_available": true,
+      "contributing_factors": ["cached_database_snapshot", "agent_no_freshness_check", "tool_output_unverified"]
+    },
+    {
+      "stage": "false_negatives",
+      "description": "Agent's risk calculator tool returns low-risk assessment based on stale profile. Agent proceeds to close case without escalation. Decision diffusion: the risk assessment was made by tool, not by the orchestrating agent.",
+      "severity": 0.50,
+      "evidence_available": false,
+      "contributing_factors": ["stale_input_to_tool", "decision_diffusion", "no_inter_agent_verification"]
+    },
+    {
+      "stage": "untraceable_decisions",
+      "description": "Agent reasoning chain is opaque. 7 intermediate steps with tool calls, each producing local context. No unified decision trace captures the delegation tree. Evidence fragmentation: artifacts scattered across agent-local contexts.",
+      "severity": 0.75,
+      "evidence_available": false,
+      "contributing_factors": ["opaque_reasoning_chain", "evidence_fragmentation", "no_delegation_trace", "7_intermediate_steps"]
+    },
+    {
+      "stage": "undetectable_degradation",
+      "description": "No monitoring signal detects the quality decline. Agent confidence is not meaningful for multi-step reasoning. Label-free proxies designed for single-model systems do not apply. Responsibility ambiguity: no single step is accountable.",
+      "severity": 0.85,
+      "evidence_available": false,
+      "contributing_factors": ["no_meaningful_confidence", "monitoring_gap", "responsibility_ambiguity", "single_model_proxy_inapplicable"]
+    },
+    {
+      "stage": "cumulative_losses",
+      "description": "Pattern repeats across 23 cases over 30 days before quarterly audit detects anomaly. All three structural breaks compound: decisions are diffused, evidence is fragmented, and responsibility cannot be attributed.",
+      "severity": 0.95,
+      "evidence_available": false,
+      "contributing_factors": ["90_day_audit_cycle", "23_affected_cases", "all_three_structural_breaks"]
+    }
+  ],
+  "total_severity": 0.92,
+  "timestamp": "2026-03-01T11:00:00Z"
+}

@@ -1,0 +1,84 @@
+{
+  "scenario_id": "aa-001-fraud-investigation",
+  "architecture_type": "agentic_ai",
+  "decision_event": {
+    "decision_id": "aa-001-event",
+    "timestamp": "2026-03-01T11:00:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["case_details", "customer_profile", "transaction_history"],
+      "alternatives_considered": ["escalate", "close_case", "request_more_info", "block_account"],
+      "constraints_operative": ["response_time_sla_4h", "privacy_gdpr"]
+    },
+    "decision_logic": {
+      "rule_version": "agent-orchestrator-v0.3",
+      "parameters": {"model": "claude-3-opus", "max_steps": 10, "tools": ["database_query", "risk_calculator", "case_notes"]},
+      "thresholds": {"confidence_to_act": 0.80}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["llm_orchestrator", "tool_executor", "memory_store"],
+      "external_dependencies": ["llm_api", "case_database", "risk_service"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": null,
+      "uncertainty_flags": ["multi_step_delegation", "tool_output_unverified", "reasoning_chain_opaque"],
+      "ground_truth_available": false
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-03-01T11:00:00Z",
+      "evidence_availability_timestamp": null,
+      "ground_truth_arrival_timestamp": "2026-06-01T11:00:00Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "absent",
+    "assessor_notes": "Three structural breaks: (1) Decision diffused across 7 agent steps with no single decision point; (2) Evidence fragmented across tool calls with no aggregation; (3) Responsibility ambiguous -- which agent step is accountable?"
+  },
+  "feasibility_matrix": {
+    "architecture_type": "agentic_ai",
+    "scenario_id": "aa-001-fraud-investigation",
+    "entries": [
+      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.7, "notes": "Initial inputs known, intermediate context lost between agent steps"},
+      {"property_name": "decision_logic", "level": "opaque", "recovery_cost": 1.0, "notes": "LLM reasoning chain not inspectable, no rule version concept"},
+      {"property_name": "decision_boundary", "level": "unfillable", "recovery_cost": 0.9, "notes": "Agent dynamically selects tools, boundary not known a priori"},
+      {"property_name": "decision_quality_indicators", "level": "opaque", "recovery_cost": 1.0, "notes": "No meaningful confidence score for multi-step reasoning"},
+      {"property_name": "human_override_record", "level": "unfillable", "recovery_cost": 0.8, "notes": "Agent acts autonomously within SLA window, no override mechanism"},
+      {"property_name": "temporal_metadata", "level": "partially_fillable", "recovery_cost": 0.6, "notes": "Start/end timestamps known, intermediate step timing lost"}
+    ],
+    "fillable_ratio": 0.0,
+    "opaque_ratio": 0.333
+  },
+  "identified_gaps": [
+    {
+      "property_name": "decision_logic",
+      "gap_type": "opaque",
+      "severity": 0.9,
+      "description": "LLM reasoning chain fundamentally opaque -- no inspectable decision boundary"
+    },
+    {
+      "property_name": "decision_boundary",
+      "gap_type": "missing",
+      "severity": 0.8,
+      "description": "Agent dynamically selects tools at runtime; decision boundary not knowable a priori"
+    },
+    {
+      "property_name": "decision_quality_indicators",
+      "gap_type": "opaque",
+      "severity": 0.85,
+      "description": "No meaningful confidence metric for multi-step autonomous reasoning"
+    },
+    {
+      "property_name": "human_override_record",
+      "gap_type": "missing",
+      "severity": 0.7,
+      "description": "Autonomous execution within SLA window precludes human override"
+    }
+  ],
+  "timestamp": "2026-03-01T11:00:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "agentic_fraud_investigation"}
+}

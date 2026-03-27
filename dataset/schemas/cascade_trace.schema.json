@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/governance-evidence/governance-benchmark-dataset/blob/main/dataset/schemas/cascade_trace.schema.json",
+  "title": "Cascade of Uncertainty Trace",
+  "description": "Trace showing how governance failures propagate through framework layers. Only applicable to hybrid ML + rules and agentic AI architectures.",
+  "type": "object",
+  "required": ["architecture_type", "scenario_id", "steps", "total_severity", "timestamp"],
+  "properties": {
+    "architecture_type": {
+      "type": "string",
+      "enum": ["hybrid_ml_rules", "agentic_ai"],
+      "description": "Only hybrid and agentic architectures exhibit cascades."
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage", "description", "severity", "evidence_available"],
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "feature_incorrectness",
+              "false_negatives",
+              "untraceable_decisions",
+              "undetectable_degradation",
+              "cumulative_losses"
+            ]
+          },
+          "description": { "type": "string" },
+          "severity": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence_available": { "type": "boolean" },
+          "contributing_factors": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "total_severity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}

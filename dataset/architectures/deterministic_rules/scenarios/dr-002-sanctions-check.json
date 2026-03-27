@@ -1,0 +1,59 @@
+{
+  "scenario_id": "dr-002-sanctions-check",
+  "architecture_type": "deterministic_rules",
+  "decision_event": {
+    "decision_id": "dr-002-event",
+    "timestamp": "2026-01-20T11:15:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["customer_name", "customer_country", "sanctions_list_version"],
+      "alternatives_considered": ["clear", "block", "refer_to_compliance"],
+      "constraints_operative": ["OFAC_SDN_list", "EU_sanctions_regulation"]
+    },
+    "decision_logic": {
+      "rule_version": "sanctions-v2.0.3",
+      "parameters": {"fuzzy_match_threshold": 0.85, "list_version": "2026-01-19"},
+      "thresholds": {"exact_match_block": 1.0, "fuzzy_refer": 0.85}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["sanctions_screening_engine", "customer_database"],
+      "external_dependencies": ["ofac_sdn_feed", "eu_consolidated_list"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": 1.0,
+      "uncertainty_flags": [],
+      "ground_truth_available": true
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-01-20T11:15:00Z",
+      "evidence_availability_timestamp": "2026-01-20T11:15:00Z",
+      "ground_truth_arrival_timestamp": "2026-01-20T11:15:01Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "excellent",
+    "assessor_notes": "Deterministic name matching with versioned sanctions list. Full audit trail. Coverage erosion risk only if list update frequency drops."
+  },
+  "feasibility_matrix": {
+    "architecture_type": "deterministic_rules",
+    "scenario_id": "dr-002-sanctions-check",
+    "entries": [
+      {"property_name": "decision_context", "level": "fillable", "recovery_cost": 0.0},
+      {"property_name": "decision_logic", "level": "fillable", "recovery_cost": 0.0},
+      {"property_name": "decision_boundary", "level": "fillable", "recovery_cost": 0.0},
+      {"property_name": "decision_quality_indicators", "level": "fillable", "recovery_cost": 0.0},
+      {"property_name": "human_override_record", "level": "fillable", "recovery_cost": 0.0},
+      {"property_name": "temporal_metadata", "level": "fillable", "recovery_cost": 0.0}
+    ],
+    "fillable_ratio": 1.0,
+    "opaque_ratio": 0.0
+  },
+  "identified_gaps": [],
+  "timestamp": "2026-01-20T11:15:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "sanctions_screening"}
+}

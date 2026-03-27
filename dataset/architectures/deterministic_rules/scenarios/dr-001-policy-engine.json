@@ -1,0 +1,59 @@
+{
+  "scenario_id": "dr-001-policy-engine",
+  "architecture_type": "deterministic_rules",
+  "decision_event": {
+    "decision_id": "dr-001-event",
+    "timestamp": "2026-01-15T09:30:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["customer_risk_score", "transaction_amount", "merchant_category"],
+      "alternatives_considered": ["approve", "decline", "escalate_to_review"],
+      "constraints_operative": ["AML_threshold_10000", "velocity_check_24h"]
+    },
+    "decision_logic": {
+      "rule_version": "policy-v3.2.1",
+      "parameters": {"aml_threshold": 10000, "velocity_window_hours": 24},
+      "thresholds": {"decline_above": 10000, "review_above": 5000}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["rule_engine", "customer_database"],
+      "external_dependencies": ["sanctions_list_api"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": 1.0,
+      "uncertainty_flags": [],
+      "ground_truth_available": true
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-01-15T09:30:00Z",
+      "evidence_availability_timestamp": "2026-01-15T09:30:00Z",
+      "ground_truth_arrival_timestamp": "2026-01-15T09:30:01Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "excellent",
+    "assessor_notes": "All decision properties fully recoverable. Rule engine provides complete audit trail."
+  },
+  "feasibility_matrix": {
+    "architecture_type": "deterministic_rules",
+    "scenario_id": "dr-001-policy-engine",
+    "entries": [
+      {"property_name": "decision_context", "level": "fillable", "recovery_cost": 0.0, "notes": "All inputs enumerable"},
+      {"property_name": "decision_logic", "level": "fillable", "recovery_cost": 0.0, "notes": "Rule version pinned"},
+      {"property_name": "decision_boundary", "level": "fillable", "recovery_cost": 0.0, "notes": "Static subsystem list"},
+      {"property_name": "decision_quality_indicators", "level": "fillable", "recovery_cost": 0.0, "notes": "Deterministic = full confidence"},
+      {"property_name": "human_override_record", "level": "fillable", "recovery_cost": 0.0, "notes": "No override path by design"},
+      {"property_name": "temporal_metadata", "level": "fillable", "recovery_cost": 0.0, "notes": "Synchronous execution"}
+    ],
+    "fillable_ratio": 1.0,
+    "opaque_ratio": 0.0
+  },
+  "identified_gaps": [],
+  "timestamp": "2026-01-15T09:30:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "aml_compliance"}
+}

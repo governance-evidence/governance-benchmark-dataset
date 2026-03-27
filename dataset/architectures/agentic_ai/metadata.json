@@ -1,0 +1,28 @@
+{
+  "architecture_type": "agentic_ai",
+  "description": "Multi-step autonomous decision chains with tool use. Three structural breaks: decision diffusion, evidence fragmentation, responsibility ambiguity.",
+  "primary_collapse_modalities": [
+    "coverage_erosion",
+    "metric_erosion",
+    "ground_truth_delay",
+    "content_staleness",
+    "schema_drift",
+    "override_accumulation"
+  ],
+  "structural_breaks": [
+    "decision_diffusion",
+    "evidence_fragmentation",
+    "responsibility_ambiguity"
+  ],
+  "decision_path_enumerable": false,
+  "has_cascade_traces": true,
+  "example_system": "LLM-based agent with tool use in fraud investigation",
+  "decision_event_property_characteristics": {
+    "decision_context": "partially_fillable",
+    "decision_logic": "opaque",
+    "decision_boundary": "unfillable",
+    "decision_quality_indicators": "opaque",
+    "human_override_record": "unfillable",
+    "temporal_metadata": "partially_fillable"
+  }
+}

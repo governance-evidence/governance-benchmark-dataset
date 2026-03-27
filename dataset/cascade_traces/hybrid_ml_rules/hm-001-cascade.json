@@ -1,0 +1,43 @@
+{
+  "architecture_type": "hybrid_ml_rules",
+  "scenario_id": "hm-001-fraud-scoring",
+  "steps": [
+    {
+      "stage": "feature_incorrectness",
+      "description": "Stale features from cache lag cause model inputs to diverge from live state. Feature pipeline delivers 15-minute-old aggregates during peak traffic.",
+      "severity": 0.25,
+      "evidence_available": true,
+      "contributing_factors": ["cache_latency", "peak_traffic", "feature_pipeline_backpressure"]
+    },
+    {
+      "stage": "false_negatives",
+      "description": "Stale features cause ML model to under-score transactions that should have been flagged. False negative rate increases from 2% to 8%.",
+      "severity": 0.45,
+      "evidence_available": true,
+      "contributing_factors": ["feature_staleness", "model_sensitivity_to_recency"]
+    },
+    {
+      "stage": "untraceable_decisions",
+      "description": "Decision traces incomplete because async pipeline drops correlation IDs under load. 30% of decisions during the window cannot be reconstructed.",
+      "severity": 0.55,
+      "evidence_available": false,
+      "contributing_factors": ["async_pipeline", "correlation_id_loss", "backpressure_shedding"]
+    },
+    {
+      "stage": "undetectable_degradation",
+      "description": "Label-free monitors (PSI, feature drift) do not trigger because the feature distribution shift is within normal seasonal bounds. The degradation is masked by expected variance.",
+      "severity": 0.70,
+      "evidence_available": false,
+      "contributing_factors": ["seasonal_masking", "monitor_threshold_calibration"]
+    },
+    {
+      "stage": "cumulative_losses",
+      "description": "Losses accumulate undetected for 14 days until ground truth labels arrive from chargeback cycle. Total undetected fraud: 340 transactions, $2.1M.",
+      "severity": 0.85,
+      "evidence_available": false,
+      "contributing_factors": ["ground_truth_delay_14d", "batch_review_cycle", "chargeback_lag"]
+    }
+  ],
+  "total_severity": 0.85,
+  "timestamp": "2026-02-10T14:22:00Z"
+}

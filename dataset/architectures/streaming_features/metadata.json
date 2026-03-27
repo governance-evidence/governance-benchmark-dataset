@@ -1,0 +1,17 @@
+{
+  "architecture_type": "streaming_features",
+  "description": "Real-time feature computation with high decision velocity. temporal_metadata under pressure (latency vs completeness).",
+  "primary_collapse_modalities": ["content_staleness"],
+  "structural_breaks": [],
+  "decision_path_enumerable": false,
+  "has_cascade_traces": false,
+  "example_system": "Real-time transaction risk scoring",
+  "decision_event_property_characteristics": {
+    "decision_context": "partially_fillable",
+    "decision_logic": "fillable",
+    "decision_boundary": "partially_fillable",
+    "decision_quality_indicators": "partially_fillable",
+    "human_override_record": "unfillable",
+    "temporal_metadata": "partially_fillable"
+  }
+}

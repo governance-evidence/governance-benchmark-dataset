@@ -1,0 +1,84 @@
+{
+  "scenario_id": "aa-002-claims-triage",
+  "architecture_type": "agentic_ai",
+  "decision_event": {
+    "decision_id": "aa-002-event",
+    "timestamp": "2026-03-10T09:00:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["claim_details", "policy_terms", "historical_claims", "medical_records_summary"],
+      "alternatives_considered": ["approve_claim", "deny_claim", "request_additional_info", "escalate_to_adjuster"],
+      "constraints_operative": ["claims_sla_48h", "hipaa_compliance", "state_insurance_regulations"]
+    },
+    "decision_logic": {
+      "rule_version": "claims-agent-v0.2",
+      "parameters": {"model": "claude-3-sonnet", "max_steps": 15, "tools": ["policy_lookup", "claims_history", "medical_summarizer", "fraud_check"]},
+      "thresholds": {"confidence_to_auto_approve": 0.90, "fraud_risk_threshold": 0.60}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["llm_orchestrator", "tool_executor", "policy_database", "claims_system"],
+      "external_dependencies": ["llm_api", "medical_records_api", "fraud_detection_service"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": null,
+      "uncertainty_flags": ["multi_step_delegation", "medical_summarizer_hallucination_risk", "policy_interpretation_ambiguity"],
+      "ground_truth_available": false
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-03-10T09:00:00Z",
+      "evidence_availability_timestamp": null,
+      "ground_truth_arrival_timestamp": "2026-09-10T09:00:00Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "absent",
+    "assessor_notes": "Agent delegated across 12 steps. Medical summarizer tool produced output that influenced final decision but summarization accuracy cannot be verified post-hoc. All three structural breaks present."
+  },
+  "feasibility_matrix": {
+    "architecture_type": "agentic_ai",
+    "scenario_id": "aa-002-claims-triage",
+    "entries": [
+      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.8, "notes": "Initial claim known, intermediate reasoning lost between 12 steps"},
+      {"property_name": "decision_logic", "level": "opaque", "recovery_cost": 1.0, "notes": "LLM policy interpretation not inspectable"},
+      {"property_name": "decision_boundary", "level": "unfillable", "recovery_cost": 0.9, "notes": "Agent dynamically chose which tools to invoke"},
+      {"property_name": "decision_quality_indicators", "level": "opaque", "recovery_cost": 1.0, "notes": "Medical summarizer hallucination risk unquantifiable"},
+      {"property_name": "human_override_record", "level": "unfillable", "recovery_cost": 0.7, "notes": "48h SLA precludes human review of each agent step"},
+      {"property_name": "temporal_metadata", "level": "partially_fillable", "recovery_cost": 0.6, "notes": "6-month claims outcome delay"}
+    ],
+    "fillable_ratio": 0.0,
+    "opaque_ratio": 0.333
+  },
+  "identified_gaps": [
+    {
+      "property_name": "decision_logic",
+      "gap_type": "opaque",
+      "severity": 0.95,
+      "description": "LLM interpretation of insurance policy terms is fundamentally opaque"
+    },
+    {
+      "property_name": "decision_boundary",
+      "gap_type": "missing",
+      "severity": 0.85,
+      "description": "Agent's tool selection is emergent -- cannot be predicted or reconstructed"
+    },
+    {
+      "property_name": "decision_quality_indicators",
+      "gap_type": "opaque",
+      "severity": 0.90,
+      "description": "Medical summarizer hallucination risk makes quality indicators meaningless"
+    },
+    {
+      "property_name": "human_override_record",
+      "gap_type": "missing",
+      "severity": 0.65,
+      "description": "Autonomous operation within SLA precludes per-step human oversight"
+    }
+  ],
+  "timestamp": "2026-03-10T09:00:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "insurance_claims_triage"}
+}

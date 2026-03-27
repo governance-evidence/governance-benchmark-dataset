@@ -1,0 +1,17 @@
+{
+  "architecture_type": "deterministic_rules",
+  "description": "Full decision path enumerability via rule engine (e.g. OPA/Rego). Every decision path can be statically enumerated and traced.",
+  "primary_collapse_modalities": ["coverage_erosion"],
+  "structural_breaks": [],
+  "decision_path_enumerable": true,
+  "has_cascade_traces": false,
+  "example_system": "OPA/Rego policy engine",
+  "decision_event_property_characteristics": {
+    "decision_context": "fillable",
+    "decision_logic": "fillable",
+    "decision_boundary": "fillable",
+    "decision_quality_indicators": "fillable",
+    "human_override_record": "fillable",
+    "temporal_metadata": "fillable"
+  }
+}

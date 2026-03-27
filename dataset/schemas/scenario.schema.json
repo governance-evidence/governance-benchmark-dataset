@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/governance-evidence/governance-benchmark-dataset/blob/main/dataset/schemas/scenario.schema.json",
+  "title": "Benchmark Scenario Record",
+  "description": "A documented decision event with governance evidence assessment for benchmark evaluation.",
+  "type": "object",
+  "required": ["scenario_id", "architecture_type", "decision_event", "ground_truth_assessment", "feasibility_matrix", "identified_gaps", "timestamp"],
+  "properties": {
+    "scenario_id": {
+      "type": "string",
+      "description": "Unique identifier for this scenario."
+    },
+    "architecture_type": {
+      "type": "string",
+      "enum": ["deterministic_rules", "hybrid_ml_rules", "streaming_features", "agentic_ai"],
+      "description": "Decision system architecture type."
+    },
+    "decision_event": {
+      "type": "object",
+      "description": "Decision Event Schema-conformant decision event record.",
+      "required": ["decision_id", "timestamp", "decision_type"],
+      "properties": {
+        "decision_id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "decision_type": { "type": "string", "enum": ["human", "automated", "hybrid"] },
+        "decision_context": { "type": "object" },
+        "decision_logic": { "type": "object" },
+        "decision_boundary": { "type": "object" },
+        "decision_quality_indicators": { "type": "object" },
+        "human_override_record": { "type": "object" },
+        "temporal_metadata": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "ground_truth_assessment": {
+      "type": "object",
+      "description": "Expert governance quality assessment.",
+      "properties": {
+        "overall_quality": {
+          "type": "string",
+          "enum": ["excellent", "adequate", "insufficient", "absent"]
+        },
+        "assessor_notes": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "feasibility_matrix": {
+      "type": "object",
+      "description": "Per-property governance evidence feasibility assessment."
+    },
+    "identified_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["property_name", "gap_type", "severity", "description"],
+        "properties": {
+          "property_name": { "type": "string" },
+          "gap_type": { "type": "string", "enum": ["missing", "delayed", "unreliable", "opaque"] },
+          "severity": { "type": "number", "minimum": 0, "maximum": 1 },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

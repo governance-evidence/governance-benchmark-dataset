@@ -1,0 +1,72 @@
+{
+  "scenario_id": "sf-002-session-risk",
+  "architecture_type": "streaming_features",
+  "decision_event": {
+    "decision_id": "sf-002-event",
+    "timestamp": "2026-02-22T08:10:00Z",
+    "decision_type": "automated",
+    "decision_context": {
+      "available_inputs": ["session_velocity_features", "geo_anomaly_score", "device_trust_score"],
+      "alternatives_considered": ["allow", "challenge", "terminate_session"],
+      "constraints_operative": ["latency_sla_30ms", "throughput_50k_rps"]
+    },
+    "decision_logic": {
+      "rule_version": "session-risk-v2.1",
+      "parameters": {"feature_window_seconds": 120, "model_version": "session-v3.0"},
+      "thresholds": {"terminate_above": 0.95, "challenge_above": 0.70}
+    },
+    "decision_boundary": {
+      "contributing_subsystems": ["stream_processor", "geo_enrichment", "device_fingerprinting"],
+      "external_dependencies": ["kafka_cluster", "maxmind_geoip", "redis_session_store"]
+    },
+    "decision_quality_indicators": {
+      "confidence_score": 0.82,
+      "uncertainty_flags": ["geo_enrichment_timeout"],
+      "ground_truth_available": false
+    },
+    "human_override_record": {
+      "override_decision": null,
+      "independence_assessment": null,
+      "basis_for_deviation": null
+    },
+    "temporal_metadata": {
+      "decision_timestamp": "2026-02-22T08:10:00Z",
+      "evidence_availability_timestamp": null,
+      "ground_truth_arrival_timestamp": "2026-03-22T08:10:00Z"
+    }
+  },
+  "ground_truth_assessment": {
+    "overall_quality": "insufficient",
+    "assessor_notes": "Geo enrichment timed out during decision, producing degraded feature. Decision made on incomplete data at streaming velocity."
+  },
+  "feasibility_matrix": {
+    "architecture_type": "streaming_features",
+    "scenario_id": "sf-002-session-risk",
+    "entries": [
+      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.5, "notes": "Some features timed out, replay only partially possible"},
+      {"property_name": "decision_logic", "level": "fillable", "recovery_cost": 0.1, "notes": "Model and rules versioned"},
+      {"property_name": "decision_boundary", "level": "partially_fillable", "recovery_cost": 0.5, "notes": "External enrichment dependency may have been unavailable"},
+      {"property_name": "decision_quality_indicators", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Score logged but degraded by timeout"},
+      {"property_name": "human_override_record", "level": "unfillable", "recovery_cost": 1.0, "notes": "No human in loop at 50k rps"},
+      {"property_name": "temporal_metadata", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Decision timestamp only, evidence availability unknown"}
+    ],
+    "fillable_ratio": 0.167,
+    "opaque_ratio": 0.0
+  },
+  "identified_gaps": [
+    {
+      "property_name": "decision_context",
+      "gap_type": "unreliable",
+      "severity": 0.5,
+      "description": "Feature degradation from geo enrichment timeout not detectable post-hoc"
+    },
+    {
+      "property_name": "human_override_record",
+      "gap_type": "missing",
+      "severity": 0.4,
+      "description": "No human override possible at streaming velocity"
+    }
+  ],
+  "timestamp": "2026-02-22T08:10:00Z",
+  "metadata": {"source": "anonymized_production", "domain": "session_risk"}
+}

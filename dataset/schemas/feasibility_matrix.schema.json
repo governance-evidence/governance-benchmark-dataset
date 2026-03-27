@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/governance-evidence/governance-benchmark-dataset/blob/main/dataset/schemas/feasibility_matrix.schema.json",
+  "title": "Feasibility Matrix",
+  "description": "Per-property governance evidence feasibility assessment for a scenario.",
+  "type": "object",
+  "required": ["architecture_type", "scenario_id", "entries"],
+  "properties": {
+    "architecture_type": {
+      "type": "string",
+      "enum": ["deterministic_rules", "hybrid_ml_rules", "streaming_features", "agentic_ai"]
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["property_name", "level"],
+        "properties": {
+          "property_name": {
+            "type": "string",
+            "description": "Decision Event Schema property name."
+          },
+          "level": {
+            "type": "string",
+            "enum": ["fillable", "partially_fillable", "unfillable", "opaque"],
+            "description": "Feasibility level for this property."
+          },
+          "recovery_cost": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Estimated cost of post-hoc recovery."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "fillable_ratio": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "opaque_ratio": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "additionalProperties": true
+}
