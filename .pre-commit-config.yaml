@@ -76,7 +76,12 @@ repos:
     hooks:
       - id: pytest-cov
         name: pytest (100% coverage)
-        entry: ./.venv/bin/python -m pytest --cov=benchmark --cov-report=term-missing --cov-fail-under=100 -q --no-header --tb=short
+        entry: >-
+          sh -c 'if [ -x ./.venv/bin/python ]; then
+          PYTHONPATH=src ./.venv/bin/python -m pytest --cov=benchmark --cov-report=term-missing --cov-fail-under=100 -q --no-header --tb=short;
+          else
+          PYTHONPATH=src python -m pytest --cov=benchmark --cov-report=term-missing --cov-fail-under=100 -q --no-header --tb=short;
+          fi'
         language: system
         types: [python]
         pass_filenames: false
@@ -89,7 +94,12 @@ repos:
     hooks:
       - id: check-headers
         name: check source file headers
-        entry: ./.venv/bin/python scripts/check_headers.py
+        entry: >-
+          sh -c 'if [ -x ./.venv/bin/python ]; then
+          exec ./.venv/bin/python scripts/check_headers.py;
+          else
+          exec python scripts/check_headers.py;
+          fi'
         language: system
         types: [python]
         pass_filenames: false
@@ -133,7 +143,12 @@ repos:
     hooks:
       - id: validate-cff
         name: validate CITATION.cff
-        entry: ./.venv/bin/python -c "import yaml, sys; yaml.safe_load(open('CITATION.cff')); print('CITATION.cff OK')"
+        entry: >-
+          sh -c 'if [ -x ./.venv/bin/python ]; then
+          exec ./.venv/bin/python -c "import yaml; yaml.safe_load(open(\"CITATION.cff\")); print(\"CITATION.cff OK\")";
+          else
+          exec python -c "import yaml; yaml.safe_load(open(\"CITATION.cff\")); print(\"CITATION.cff OK\")";
+          fi'
         language: system
         files: CITATION\.cff
         pass_filenames: false
