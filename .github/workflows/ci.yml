@@ -29,7 +29,11 @@ jobs:
       - uses: pre-commit/action@v3.0.1
 
       # Dependency vulnerability scan (not in pre-commit)
-      - run: python -m pip_audit --strict --desc
+      - run: |
+          tmpfile=$(mktemp)
+          python -m pip freeze | grep -v '^-e ' > "$tmpfile"
+          python -m pip_audit --strict --desc -r "$tmpfile"
+          rm -f "$tmpfile"
 
   test-matrix:
     runs-on: ubuntu-latest
