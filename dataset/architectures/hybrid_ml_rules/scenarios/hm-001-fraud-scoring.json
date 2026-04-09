@@ -2,37 +2,86 @@
   "scenario_id": "hm-001-fraud-scoring",
   "architecture_type": "hybrid_ml_rules",
   "decision_event": {
+    "schema_version": "0.3.0",
     "decision_id": "hm-001-event",
     "timestamp": "2026-02-10T14:22:00Z",
     "decision_type": "hybrid",
     "decision_context": {
-      "available_inputs": ["transaction_features", "ml_risk_score", "customer_history"],
-      "alternatives_considered": ["approve", "decline", "manual_review"],
-      "constraints_operative": ["fraud_loss_budget", "false_positive_rate_cap"]
+      "decision_id": "hm-001-event",
+      "decision_type": "fraud_detection",
+      "available_inputs": [
+        "transaction_features",
+        "ml_risk_score",
+        "customer_history"
+      ],
+      "alternatives_considered": [
+        "approve",
+        "decline",
+        "manual_review"
+      ],
+      "constraints_operative": [
+        "fraud_loss_budget",
+        "false_positive_rate_cap"
+      ]
     },
     "decision_logic": {
+      "logic_type": "hybrid",
+      "output": "approved",
       "rule_version": "fraud-rules-v2.1",
-      "parameters": {"model_version": "xgb-fraud-v4.3", "threshold": 0.72},
-      "thresholds": {"auto_decline": 0.95, "review_band": 0.72}
+      "parameters": {
+        "model_version": "xgb-fraud-v4.3",
+        "threshold": 0.72
+      },
+      "thresholds": {
+        "auto_decline": 0.95,
+        "review_band": 0.72
+      }
     },
     "decision_boundary": {
-      "contributing_subsystems": ["ml_scoring_service", "rule_engine", "case_management"],
-      "external_dependencies": ["feature_store", "model_registry"]
+      "contributing_subsystems": [
+        "ml_scoring_service",
+        "rule_engine",
+        "case_management"
+      ],
+      "external_dependencies": [
+        "feature_store",
+        "model_registry"
+      ]
     },
     "decision_quality_indicators": {
       "confidence_score": 0.78,
-      "uncertainty_flags": ["model_drift_warning"],
+      "uncertainty_flags": [
+        "model_drift_warning"
+      ],
       "ground_truth_available": false
     },
     "human_override_record": {
+      "override_occurred": true,
       "override_decision": "approved",
       "independence_assessment": "independent",
-      "basis_for_deviation": "Known customer with seasonal spending pattern"
+      "basis_for_deviation": "Known customer with seasonal spending pattern",
+      "original_output": "approve",
+      "overridden_output": "approved",
+      "override_timestamp": "2026-02-10T14:22:00Z",
+      "override_actor": {
+        "actor_id": "human-review",
+        "actor_role": "reviewer",
+        "authorization_level": "standard"
+      },
+      "override_rationale": "Known customer with seasonal spending pattern"
     },
     "temporal_metadata": {
+      "event_timestamp": "2026-02-10T14:22:00Z",
       "decision_timestamp": "2026-02-10T14:22:00Z",
       "evidence_availability_timestamp": "2026-02-10T14:22:05Z",
-      "ground_truth_arrival_timestamp": "2026-03-10T14:22:00Z"
+      "ground_truth_arrival_timestamp": "2026-03-10T14:22:00Z",
+      "sequence_number": 1,
+      "hash_chain": {
+        "previous_hash": null,
+        "current_hash": "hm-001-fraud-scoring-hash",
+        "algorithm": "SHA-256"
+      },
+      "evidence_tier": "lightweight"
     }
   },
   "ground_truth_assessment": {
@@ -43,12 +92,42 @@
     "architecture_type": "hybrid_ml_rules",
     "scenario_id": "hm-001-fraud-scoring",
     "entries": [
-      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.3, "notes": "ML features known, learned interactions opaque"},
-      {"property_name": "decision_logic", "level": "partially_fillable", "recovery_cost": 0.5, "notes": "Rule version known, ML boundaries opaque"},
-      {"property_name": "decision_boundary", "level": "fillable", "recovery_cost": 0.1, "notes": "Service mesh provides dependency graph"},
-      {"property_name": "decision_quality_indicators", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Score available, calibration uncertain"},
-      {"property_name": "human_override_record", "level": "fillable", "recovery_cost": 0.0, "notes": "Case management captures overrides"},
-      {"property_name": "temporal_metadata", "level": "partially_fillable", "recovery_cost": 0.3, "notes": "28-day ground truth delay"}
+      {
+        "property_name": "decision_context",
+        "level": "partially_fillable",
+        "recovery_cost": 0.3,
+        "notes": "ML features known, learned interactions opaque"
+      },
+      {
+        "property_name": "decision_logic",
+        "level": "partially_fillable",
+        "recovery_cost": 0.5,
+        "notes": "Rule version known, ML boundaries opaque"
+      },
+      {
+        "property_name": "decision_boundary",
+        "level": "fillable",
+        "recovery_cost": 0.1,
+        "notes": "Service mesh provides dependency graph"
+      },
+      {
+        "property_name": "decision_quality_indicators",
+        "level": "partially_fillable",
+        "recovery_cost": 0.4,
+        "notes": "Score available, calibration uncertain"
+      },
+      {
+        "property_name": "human_override_record",
+        "level": "fillable",
+        "recovery_cost": 0.0,
+        "notes": "Case management captures overrides"
+      },
+      {
+        "property_name": "temporal_metadata",
+        "level": "partially_fillable",
+        "recovery_cost": 0.3,
+        "notes": "28-day ground truth delay"
+      }
     ],
     "fillable_ratio": 0.333,
     "opaque_ratio": 0.0
@@ -68,5 +147,8 @@
     }
   ],
   "timestamp": "2026-02-10T14:22:00Z",
-  "metadata": {"source": "anonymized_production", "domain": "fraud_detection"}
+  "metadata": {
+    "source": "anonymized_production",
+    "domain": "fraud_detection"
+  }
 }

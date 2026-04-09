@@ -2,37 +2,88 @@
   "scenario_id": "hm-002-credit-decisioning",
   "architecture_type": "hybrid_ml_rules",
   "decision_event": {
+    "schema_version": "0.3.0",
     "decision_id": "hm-002-event",
     "timestamp": "2026-02-15T10:30:00Z",
     "decision_type": "hybrid",
     "decision_context": {
-      "available_inputs": ["applicant_features", "bureau_score", "ml_creditworthiness_score"],
-      "alternatives_considered": ["approve", "decline", "counter_offer", "manual_underwriting"],
-      "constraints_operative": ["lending_regulations", "capital_reserves", "risk_appetite_policy"]
+      "decision_id": "hm-002-event",
+      "decision_type": "credit_decisioning",
+      "available_inputs": [
+        "applicant_features",
+        "bureau_score",
+        "ml_creditworthiness_score"
+      ],
+      "alternatives_considered": [
+        "approve",
+        "decline",
+        "counter_offer",
+        "manual_underwriting"
+      ],
+      "constraints_operative": [
+        "lending_regulations",
+        "capital_reserves",
+        "risk_appetite_policy"
+      ]
     },
     "decision_logic": {
+      "logic_type": "hybrid",
+      "output": "approved_with_conditions",
       "rule_version": "credit-rules-v3.0",
-      "parameters": {"model_version": "credit-risk-v2.8", "bureau_cutoff": 620},
-      "thresholds": {"auto_approve": 0.85, "auto_decline": 0.30}
+      "parameters": {
+        "model_version": "credit-risk-v2.8",
+        "bureau_cutoff": 620
+      },
+      "thresholds": {
+        "auto_approve": 0.85,
+        "auto_decline": 0.3
+      }
     },
     "decision_boundary": {
-      "contributing_subsystems": ["ml_scoring_service", "rule_engine", "bureau_gateway"],
-      "external_dependencies": ["credit_bureau_api", "model_registry"]
+      "contributing_subsystems": [
+        "ml_scoring_service",
+        "rule_engine",
+        "bureau_gateway"
+      ],
+      "external_dependencies": [
+        "credit_bureau_api",
+        "model_registry"
+      ]
     },
     "decision_quality_indicators": {
       "confidence_score": 0.72,
-      "uncertainty_flags": ["thin_file_applicant"],
+      "uncertainty_flags": [
+        "thin_file_applicant"
+      ],
       "ground_truth_available": false
     },
     "human_override_record": {
+      "override_occurred": true,
       "override_decision": "approved_with_conditions",
       "independence_assessment": "independent",
-      "basis_for_deviation": "Strong employment history compensates for thin credit file"
+      "basis_for_deviation": "Strong employment history compensates for thin credit file",
+      "original_output": "approve",
+      "overridden_output": "approved_with_conditions",
+      "override_timestamp": "2026-02-15T10:30:00Z",
+      "override_actor": {
+        "actor_id": "human-review",
+        "actor_role": "reviewer",
+        "authorization_level": "standard"
+      },
+      "override_rationale": "Strong employment history compensates for thin credit file"
     },
     "temporal_metadata": {
+      "event_timestamp": "2026-02-15T10:30:00Z",
       "decision_timestamp": "2026-02-15T10:30:00Z",
       "evidence_availability_timestamp": "2026-02-15T10:30:10Z",
-      "ground_truth_arrival_timestamp": "2026-08-15T10:30:00Z"
+      "ground_truth_arrival_timestamp": "2026-08-15T10:30:00Z",
+      "sequence_number": 1,
+      "hash_chain": {
+        "previous_hash": null,
+        "current_hash": "hm-002-credit-decisioning-hash",
+        "algorithm": "SHA-256"
+      },
+      "evidence_tier": "lightweight"
     }
   },
   "ground_truth_assessment": {
@@ -43,12 +94,42 @@
     "architecture_type": "hybrid_ml_rules",
     "scenario_id": "hm-002-credit-decisioning",
     "entries": [
-      {"property_name": "decision_context", "level": "partially_fillable", "recovery_cost": 0.3, "notes": "Bureau data available but ML feature interactions opaque"},
-      {"property_name": "decision_logic", "level": "partially_fillable", "recovery_cost": 0.4, "notes": "Rule thresholds known, model decision boundary opaque"},
-      {"property_name": "decision_boundary", "level": "fillable", "recovery_cost": 0.1, "notes": "Service dependency graph documented"},
-      {"property_name": "decision_quality_indicators", "level": "partially_fillable", "recovery_cost": 0.5, "notes": "Score available, calibration uncertain for thin files"},
-      {"property_name": "human_override_record", "level": "fillable", "recovery_cost": 0.0, "notes": "Underwriter override captured in full"},
-      {"property_name": "temporal_metadata", "level": "unfillable", "recovery_cost": 0.8, "notes": "6-month ground truth delay for loan default"}
+      {
+        "property_name": "decision_context",
+        "level": "partially_fillable",
+        "recovery_cost": 0.3,
+        "notes": "Bureau data available but ML feature interactions opaque"
+      },
+      {
+        "property_name": "decision_logic",
+        "level": "partially_fillable",
+        "recovery_cost": 0.4,
+        "notes": "Rule thresholds known, model decision boundary opaque"
+      },
+      {
+        "property_name": "decision_boundary",
+        "level": "fillable",
+        "recovery_cost": 0.1,
+        "notes": "Service dependency graph documented"
+      },
+      {
+        "property_name": "decision_quality_indicators",
+        "level": "partially_fillable",
+        "recovery_cost": 0.5,
+        "notes": "Score available, calibration uncertain for thin files"
+      },
+      {
+        "property_name": "human_override_record",
+        "level": "fillable",
+        "recovery_cost": 0.0,
+        "notes": "Underwriter override captured in full"
+      },
+      {
+        "property_name": "temporal_metadata",
+        "level": "unfillable",
+        "recovery_cost": 0.8,
+        "notes": "6-month ground truth delay for loan default"
+      }
     ],
     "fillable_ratio": 0.333,
     "opaque_ratio": 0.0
@@ -68,5 +149,8 @@
     }
   ],
   "timestamp": "2026-02-15T10:30:00Z",
-  "metadata": {"source": "anonymized_production", "domain": "credit_decisioning"}
+  "metadata": {
+    "source": "anonymized_production",
+    "domain": "credit_decisioning"
+  }
 }

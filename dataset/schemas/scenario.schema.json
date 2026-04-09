@@ -18,17 +18,36 @@
     "decision_event": {
       "type": "object",
       "description": "Decision Event Schema-conformant decision event record.",
-      "required": ["decision_id", "timestamp", "decision_type"],
+      "required": [
+        "schema_version",
+        "decision_context",
+        "decision_logic",
+        "human_override_record",
+        "temporal_metadata"
+      ],
       "properties": {
+        "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
         "decision_id": { "type": "string" },
         "timestamp": { "type": "string", "format": "date-time" },
         "decision_type": { "type": "string", "enum": ["human", "automated", "hybrid"] },
-        "decision_context": { "type": "object" },
-        "decision_logic": { "type": "object" },
+        "decision_context": {
+          "type": "object",
+          "required": ["decision_id", "decision_type"]
+        },
+        "decision_logic": {
+          "type": "object",
+          "required": ["logic_type", "output"]
+        },
         "decision_boundary": { "type": "object" },
         "decision_quality_indicators": { "type": "object" },
-        "human_override_record": { "type": "object" },
-        "temporal_metadata": { "type": "object" }
+        "human_override_record": {
+          "type": "object",
+          "required": ["override_occurred"]
+        },
+        "temporal_metadata": {
+          "type": "object",
+          "required": ["event_timestamp", "sequence_number", "hash_chain", "evidence_tier"]
+        }
       },
       "additionalProperties": true
     },

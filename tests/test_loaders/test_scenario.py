@@ -97,9 +97,31 @@ class TestParseDatetime:
             "scenario_id": "test-naive-ts",
             "architecture_type": "deterministic_rules",
             "decision_event": {
+                "schema_version": "0.3.0",
                 "decision_id": "test",
                 "timestamp": "2026-01-01T00:00:00",
                 "decision_type": "automated",
+                "decision_context": {
+                    "decision_id": "test",
+                    "decision_type": "aml_compliance",
+                },
+                "decision_logic": {
+                    "logic_type": "rule_based",
+                    "output": "approve",
+                },
+                "human_override_record": {
+                    "override_occurred": False,
+                },
+                "temporal_metadata": {
+                    "event_timestamp": "2026-01-01T00:00:00",
+                    "sequence_number": 1,
+                    "hash_chain": {
+                        "previous_hash": None,
+                        "current_hash": "test-hash",
+                        "algorithm": "SHA-256",
+                    },
+                    "evidence_tier": "lightweight",
+                },
             },
             "ground_truth_assessment": {},
             "feasibility_matrix": None,

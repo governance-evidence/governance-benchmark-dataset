@@ -56,10 +56,10 @@ class TestEnums:
 
     def test_cascade_architectures_constant(self):
         assert isinstance(CASCADE_ARCHITECTURES, frozenset)
-        assert CASCADE_ARCHITECTURES == {
+        assert {
             ArchitectureType.HYBRID_ML_RULES,
             ArchitectureType.AGENTIC_AI,
-        }
+        } == CASCADE_ARCHITECTURES
         assert len(CASCADE_ARCHITECTURES) == 2
 
 

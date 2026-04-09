@@ -72,6 +72,12 @@ source = ["benchmark"]
 branch = true
 
 # --------------------------------------------------------------------------- #
+# hypothesis
+# --------------------------------------------------------------------------- #
+[tool.hypothesis]
+database_backend = "directory"
+
+# --------------------------------------------------------------------------- #
 # mypy  — strict type checking
 # --------------------------------------------------------------------------- #
 [tool.mypy]
@@ -117,18 +123,12 @@ addopts = "-v --tb=short --strict-markers --strict-config"
 xfail_strict = true
 filterwarnings = [
   "error",
-  "ignore::DeprecationWarning:pyarrow.*",
+  "ignore::DeprecationWarning:pyarrow.*"
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-  "integration: marks integration tests (require dataset files on disk)",
+  "integration: marks integration tests (require dataset files on disk)"
 ]
-
-# --------------------------------------------------------------------------- #
-# hypothesis
-# --------------------------------------------------------------------------- #
-[tool.hypothesis]
-database_backend = "directory"
 
 # --------------------------------------------------------------------------- #
 # ruff  — linter + formatter
@@ -199,11 +199,11 @@ max-complexity = 10
 "scripts/**/*.py" = [
   "D", # no docstrings required in scripts
   "ANN", # no type annotations required in scripts
-  "T20", # print() is fine in scripts
+  "T20" # print() is fine in scripts
 ]
 "vulture_whitelist.py" = [
   "F401", # unused imports are the point of this file
-  "D", # no docstrings required
+  "D" # no docstrings required
 ]
 
 [tool.ruff.lint.pydocstyle]

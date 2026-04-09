@@ -241,9 +241,31 @@ def make_scenario_record(
         scenario_id=scenario_id,
         architecture_type=architecture_type,
         decision_event={
+            "schema_version": "0.3.0",
             "decision_id": f"{scenario_id}-event",
             "timestamp": "2026-03-25T12:00:00Z",
             "decision_type": "automated",
+            "decision_context": {
+                "decision_id": f"{scenario_id}-event",
+                "decision_type": scenario_id,
+            },
+            "decision_logic": {
+                "logic_type": "rule_based",
+                "output": "approve",
+            },
+            "human_override_record": {
+                "override_occurred": False,
+            },
+            "temporal_metadata": {
+                "event_timestamp": "2026-03-25T12:00:00Z",
+                "sequence_number": 1,
+                "hash_chain": {
+                    "previous_hash": None,
+                    "current_hash": f"{scenario_id}-hash",
+                    "algorithm": "SHA-256",
+                },
+                "evidence_tier": "lightweight",
+            },
         },
         ground_truth_assessment={"overall_quality": "adequate"},
         feasibility_matrix=make_feasibility_matrix(architecture_type, scenario_id=scenario_id),
