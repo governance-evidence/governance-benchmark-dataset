@@ -1,15 +1,25 @@
 # Governance Benchmark Dataset
 
 ![Status: Alpha](https://img.shields.io/badge/status-alpha-orange)
-![Version: v0.1.0](https://img.shields.io/badge/version-v0.1.0-blue)
 ![Python: 3.11-3.13](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)
 [![CI](https://github.com/governance-evidence/governance-benchmark-dataset/actions/workflows/ci.yml/badge.svg)](https://github.com/governance-evidence/governance-benchmark-dataset/actions/workflows/ci.yml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19248723.svg)](https://doi.org/10.5281/zenodo.19248723)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19248722.svg)](https://doi.org/10.5281/zenodo.19248722)
+[![arXiv](https://img.shields.io/badge/arXiv-2604.19112-b31b1b.svg)](https://arxiv.org/abs/2604.19112)
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache%202.0-green.svg)](LICENSE-CODE)
 [![License: CC BY 4.0](https://img.shields.io/badge/dataset-CC%20BY%204.0-lightgrey.svg)](LICENSE-DATASET)
 
 Curated benchmark dataset and evaluation harness for comparing governance evidence
 feasibility across four decision system architectures.
+
+## Academic Context
+
+This benchmark is the primary artifact of:
+
+> Solozobov, O. (2026). *Governed Auditable Decisioning Under Uncertainty: Synthesis and Agentic Extension*.
+> arXiv:2604.19112. <https://arxiv.org/abs/2604.19112>
+
+The dataset supports the cross-architecture comparison (rule engines, hybrid ML+rules, streaming
+feature-driven, agentic AI) that underpins the synthesis of the N4 governance evidence framework.
 
 ## Install
 
@@ -122,12 +132,48 @@ make format     # auto-fix lint + format
 
 This benchmark is part of the [governance-evidence](https://github.com/governance-evidence) toolkit:
 
-| Repository | Role | DOI |
-|------------|------|-----|
-| [decision-event-schema](https://github.com/governance-evidence/decision-event-schema) | Schema whose properties this benchmark scores | [10.5281/zenodo.18923178](https://doi.org/10.5281/zenodo.18923178) |
-| [evidence-sufficiency-calc](https://github.com/governance-evidence/evidence-sufficiency-calc) | Sufficiency scoring used in benchmark evaluation | Pending |
-| [governance-drift-toolkit](https://github.com/governance-evidence/governance-drift-toolkit) | Drift monitoring validated by benchmark scenarios | Pending |
+| Repository | Role | Concept DOI |
+|------------|------|-------------|
+| [decision-event-schema](https://github.com/governance-evidence/decision-event-schema) | Schema whose properties this benchmark scores | [10.5281/zenodo.18923177](https://doi.org/10.5281/zenodo.18923177) |
+| [evidence-sufficiency-calc](https://github.com/governance-evidence/evidence-sufficiency-calc) | Sufficiency scoring used in benchmark evaluation | [10.5281/zenodo.19233930](https://doi.org/10.5281/zenodo.19233930) |
+| [governance-drift-toolkit](https://github.com/governance-evidence/governance-drift-toolkit) | Drift monitoring validated by benchmark scenarios | [10.5281/zenodo.19236417](https://doi.org/10.5281/zenodo.19236417) |
+| [evidence-collector-sdk](https://github.com/governance-evidence/evidence-collector-sdk) | Event collection layer that produces scored events | [10.5281/zenodo.19245404](https://doi.org/10.5281/zenodo.19245404) |
+
+All DOIs above are **concept DOIs** -- each resolves to the latest Zenodo release of that artifact.
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff) for citation metadata.
+If you use this benchmark in your research, please cite both the paper and the dataset artifact.
+
+**Paper (primary):**
+
+```bibtex
+@misc{solozobov2026governedauditable,
+  author = {Solozobov, Oleg},
+  title  = {Governed Auditable Decisioning Under Uncertainty: Synthesis and Agentic Extension},
+  year   = {2026},
+  eprint = {2604.19112},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CY},
+  doi    = {10.48550/arXiv.2604.19112},
+  url    = {https://arxiv.org/abs/2604.19112}
+}
+```
+
+**Dataset (this repository):**
+
+```bibtex
+@dataset{solozobov2026governancebenchmark,
+  author    = {Solozobov, Oleg},
+  title     = {Governance Benchmark Dataset},
+  version   = {0.2.0},
+  year      = {2026},
+  url       = {https://github.com/governance-evidence/governance-benchmark-dataset},
+  doi       = {10.5281/zenodo.19248722}
+}
+```
+
+The dataset `doi` above is the **concept DOI** (always resolves to the latest Zenodo release).
+The current v0.2.0 version DOI is [10.5281/zenodo.19479343](https://doi.org/10.5281/zenodo.19479343).
+
+See [CITATION.cff](CITATION.cff) for machine-readable citation metadata.

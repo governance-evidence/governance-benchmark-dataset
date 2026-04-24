@@ -5,9 +5,20 @@ type: dataset
 authors:
   - given-names: Oleg
     family-names: Solozobov
-version: 0.1.0
+    orcid: "https://orcid.org/0009-0009-0105-7459"
+version: 0.2.0
+date-released: "2026-04-09"
 license: CC-BY-4.0
 repository-code: "https://github.com/governance-evidence/governance-benchmark-dataset"
+url: "https://github.com/governance-evidence/governance-benchmark-dataset"
+doi: "10.5281/zenodo.19479343"  # v0.2.0 version DOI
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19248722"
+    description: "Concept DOI (always resolves to latest Zenodo release)"
+  - type: other
+    value: "arXiv:2604.19112"
+    description: "Preprint: Governed Auditable Decisioning Under Uncertainty -- Synthesis and Agentic Extension"
 abstract: >-
   Curated benchmark dataset and evaluation harness for comparing governance
   evidence feasibility across four decision system architectures: deterministic
