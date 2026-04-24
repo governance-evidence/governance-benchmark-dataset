@@ -33,14 +33,14 @@ dependencies = [
 
 [project.optional-dependencies]
 parquet = [
-  "pyarrow>=14,<24"
+  "pyarrow>=14,<25"
 ]
 des = [
   "jsonschema>=4.20,<5"
 ]
 dev = [
   "jsonschema>=4.20,<5",
-  "pyarrow>=14,<24",
+  "pyarrow>=14,<25",
   "pytest>=7,<10",
   "pytest-cov>=4,<8",
   "hypothesis>=6.80,<7",
